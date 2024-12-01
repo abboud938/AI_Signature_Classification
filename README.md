@@ -9,16 +9,38 @@ An AI-powered solution for detecting and classifying handwritten signatures from
 
 ## Project Workflow
 1. **YOLO Detection**:
-   - Detects the signature bounding boxes in scanned document images.
-   - Outputs the cropped signature regions.
-    ![YOLO Training Result](yolo/result.png)
+- Model: **YOLOv5** (custom-trained for signature detection).
+- Purpose: Detects bounding boxes around signatures in scanned documents.
+- Training:
+  - Dataset: A custom-labeled dataset of scanned documents with annotated signature regions.
+  - Framework: PyTorch with the YOLOv5 implementation.
+- Output: Cropped images containing the detected signatures.
+![YOLO Training Result](yolo/result.png)
 
 2. **Denoising**:
-   - Cleans and enhances the extracted signature regions for better classification accuracy.
-   ![Denoising Autoencoder Training Result](signature_denoising/result.png)
+- Model: **Convolutional Autoencoder**.
+- Purpose: Removes noise and enhances the quality of the detected signature regions.
+- Architecture:
+  - Encoder: Series of convolutional layers with max pooling.
+  - Decoder: Transposed convolutional layers to reconstruct the cleaned signature.
+- Training:
+  - Dataset: Noisy and clean pairs of signature images.
+  - Loss Function: Mean Squared Error (MSE).
+- Output: Enhanced images of the detected signatures.
+![Denoising Autoencoder Training Result](signature_denoising/result.png)
 
 3. **Classification**:
-   - A Convolutional Neural Network (CNN) extracts features.
-   - A Random Forest (RF) classifier predicts the signature owner.
+- Models:
+  - **Convolutional Neural Network (CNN)**: Used as a feature extractor.
+    - Pretrained Model: VGG16 (truncated to remove the final fully connected layers).
+    - Output: Feature vectors for each signature image.
+![CNN wiht Triplet Loss Training Result](classification/result.png)
+  - **Random Forest (RF) Classifier**: Classifies the extracted features into signature owners.
+- Training:
+  - Dataset: Cropped and denoised signature images organized by owner.
+  - Augmentation: Applied transformations (rotation, scaling) to generate 20 variations per signature.
+- Output: Predicted class label (owner of the signature).
+![Random Forest Training Result](classification/RF_Result.png)
+
 
 
