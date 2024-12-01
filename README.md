@@ -11,9 +11,11 @@ An AI-powered solution for detecting and classifying handwritten signatures from
 1. **YOLO Detection**:
    - Detects the signature bounding boxes in scanned document images.
    - Outputs the cropped signature regions.
+    ![YOLO Training Result](yolo/result.png)
 
 2. **Denoising**:
    - Cleans and enhances the extracted signature regions for better classification accuracy.
+   ![Denoising Autoencoder Training Result](signature_denoising/result.png)
 
 3. **Classification**:
    - A Convolutional Neural Network (CNN) extracts features.
